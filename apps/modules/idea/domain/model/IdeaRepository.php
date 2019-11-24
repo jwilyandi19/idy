@@ -6,5 +6,6 @@ interface IdeaRepository
 {
     public function byId(IdeaId $id);
     public function save(Idea $idea);
+    public function exist(IdeaId $id);
     public function allIdeas();
 }
