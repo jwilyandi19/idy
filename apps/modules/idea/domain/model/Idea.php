@@ -13,14 +13,14 @@ class Idea
     private $ratings;
     private $votes;
     
-    public function __construct(IdeaId $id, $title, $description, Author $author)
+    public function __construct(IdeaId $id, $title, $description, Author $author, $votes)
     {
         $this->id = $id;
         $this->title = $title;
         $this->description = $description;
         $this->author = $author;
         $this->ratings = array();
-        $this->votes = 0;
+        $this->votes = $votes;
     }
 
     public function id() 
@@ -101,9 +101,9 @@ class Idea
         return $totalRatings / $numberOfRatings;
     }
 
-    public static function makeIdea($title, $description, $author)
+    public static function makeIdea($title, $description, $author, $votes)
     {
-        $newIdea = new Idea(new IdeaId(), $title, $description, $author);
+        $newIdea = new Idea(new IdeaId(), $title, $description, $author, $votes);
         
         return $newIdea;
     }

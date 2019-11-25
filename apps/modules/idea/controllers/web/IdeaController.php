@@ -8,6 +8,8 @@ use Idy\Idea\Application\CreateNewIdeaService;
 use Idy\Idea\Application\ViewAllIdeasService;
 use Idy\Idea\Application\RateIdeaRequest;
 use Idy\Idea\Application\RateIdeaService;
+use Idy\Idea\Application\VoteIdeaRequest;
+use Idy\Idea\Application\VoteIdeaService;
 use Idy\Idea\Application\ViewIdeaByIdRequest;
 use Idy\Idea\Application\ViewIdeaByIdService;
 
@@ -17,6 +19,7 @@ class IdeaController extends Controller
     private $rateIdeaService;
     private $viewAllIdeasService;
     private $viewIdeaByIdService;
+    private $voteIdeaService;
     private $session;
 
     public function onConstruct()
@@ -28,6 +31,7 @@ class IdeaController extends Controller
         $this->viewAllIdeasService = new ViewAllIdeasService($ideaRepository, $ratingRepository);
         $this->viewIdeaByIdService = new ViewIdeaByIdService($ideaRepository, $ratingRepository);
         $this->session = $this->di->getShared('session');
+        $this->voteIdeaService = new VoteIdeaService($ideaRepository);
     }
 
     public function indexAction()
@@ -58,9 +62,12 @@ class IdeaController extends Controller
         return $this->view->pick('add');
     }
 
-    public function voteAction()
+    public function voteAction($id)
     {
-
+        $voteRequest = new VoteIdeaRequest($id);
+        $response = $this->voteIdeaService->execute($voteRequest);
+        $idea = $response->idea; 
+        $this->response->redirect('idea');
     }
 
     public function rateAction($id)

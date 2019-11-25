@@ -133,7 +133,8 @@ class SqlIdeaRepository implements IdeaRepository
             $ideaId,
             $row["title"],
             $row["description"],
-            $author
+            $author,
+            $row["votes"]
         );
         return $idea;
     }

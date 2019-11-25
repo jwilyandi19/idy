@@ -11,11 +11,12 @@ class IdeaTest extends TestCase
     public function testCanBeInstantiated() : void
     {
         $author = new Author("John Doe", "john.doe@mail.com");
-        $idea = Idea::makeIdea("my idea", "my description", $author);
+        $idea = Idea::makeIdea("my idea", "my description", $author,10);
 
         $this->assertEquals("my idea", $idea->title());
         $this->assertEquals("my description", $idea->description());
         $this->assertEquals($author, $idea->author());
+        $this->assertEquals(10,$idea->votes());
     }
     
 }
