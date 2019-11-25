@@ -3,6 +3,7 @@
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Volt;
 use Idy\Idea\Infrastructure\SqlIdeaRepository;
+use Phalcon\Session\Adapter\Files as Session;
 
 $di['voltServiceMail'] = function($view) use ($di) {
 
@@ -49,6 +50,12 @@ $di['db'] = function () use ($di) {
         "dbname" => $config->database->dbname
     ]);
 };
+
+$di->setShared('session',function () use ($di) {
+    $session = new Session();
+    $session->start();
+    return $session;
+});
 
 $di->setShared('sql_idea_repository', function() use ($di) {
     $repo = new SqlIdeaRepository($di);

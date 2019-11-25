@@ -22,7 +22,7 @@ class SqlIdeaRepository implements IdeaRepository
         $this->ideas = array();
     }
 
-    public function byId(IdeaId $id)
+    public function byId(IdeaId $id): ?Idea
     {
         $statement = $this->db->prepare
         (
@@ -49,7 +49,7 @@ class SqlIdeaRepository implements IdeaRepository
 
     }
 
-    public function save(Idea $idea) 
+    public function save(Idea $idea): int
     {
         $isExist = $this->exist($idea->id());
         $placeholders = 
@@ -91,7 +91,7 @@ class SqlIdeaRepository implements IdeaRepository
     }
     
 
-    public function exist(IdeaId $id)
+    public function exist(IdeaId $id): int
     {
         $statement = $this->db->prepare
         (
@@ -110,7 +110,7 @@ class SqlIdeaRepository implements IdeaRepository
         return $ideaRow ? 1 : 0;
     }
 
-    public function allIdeas()
+    public function allIdeas() : array
     {
         $ideaResult = $this->db->query
         (
@@ -120,7 +120,7 @@ class SqlIdeaRepository implements IdeaRepository
         $ideas = array();
         foreach($ideaRows as $row) 
         {
-            $idea = $this->buildIdea($row);
+            $idea = $this->convertIdea($row);
             array_push($ideas,$idea);
         }
         return $ideas;
