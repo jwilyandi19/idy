@@ -12,14 +12,12 @@ use Idy\Idea\Domain\Model\IdeaRepository;
 
 class SqlIdeaRepository implements IdeaRepository
 {
-    private $ideas;
     private $db;
     
 
     public function __construct($di)
     {
         $this->db = $di->get('db');
-        $this->ideas = array();
     }
 
     public function byId(IdeaId $id): ?Idea

@@ -51,13 +51,13 @@ $di['router'] = function() use ($defaultModule, $modules, $di, $config) {
 				'params' => 2
 			));
 
-			$router->add('/'. $moduleName . '/:controller/:action/:params', array(
+			/*$router->add('/'. $moduleName . '/:controller/:action/:params', array(
 				'namespace' => $module['webControllerNamespace'],
 				'module' => $moduleName,
 				'controller' => 1,
 				'action' => 2,
 				'params' => 3
-			));	
+			));	*/
 
 			/**
 			 * Default API Module routing

@@ -14,6 +14,7 @@ class Module implements ModuleDefinitionInterface
 
         $loader->registerNamespaces([
             'Idy\Idea\Domain\Model' => __DIR__ . '/domain/model',
+            'Idy\Idea\Domain\Event' => __DIR__ . '/domain/event',
             'Idy\Idea\Infrastructure' => __DIR__ . '/infrastructure',
             'Idy\Idea\Application' => __DIR__ . '/application',
             'Idy\Idea\Controllers\Web' => __DIR__ . '/controllers/web',

@@ -11,7 +11,7 @@ interface DomainEventSubscriber
 
     /**
      * @param DomainEvent $aDomainEvent
-     * @return bool
+     * @return int
      */
     public function isSubscribedTo($aDomainEvent);
 }

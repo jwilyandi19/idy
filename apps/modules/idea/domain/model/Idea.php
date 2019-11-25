@@ -2,6 +2,8 @@
 
 namespace Idy\Idea\Domain\Model;
 
+use Idy\Common\Events\DomainEventPublisher;
+
 class Idea
 {
     private $id;
@@ -41,14 +43,22 @@ class Idea
         return $this->author;
     }
 
+    public function ratings()
+    {
+        return $this->ratings;
+    }
+
     public function votes()
     {
         return $this->votes;
     }
 
-    public function addRating($user, $ratingValue)
+    public function loadRatings(array $ratings){
+        $this->ratings = $ratings;
+    }
+
+    public function addRating($newRating)
     {
-        $newRating = new Rating($user, $ratingValue);
 
         if ($newRating->isValid()) {
             $exist = false;
@@ -61,12 +71,11 @@ class Idea
             if (!$exist) {
                 array_push($this->ratings, $newRating);
             } else {
-                throw new Exception('Author ' . $newRating->author() . ' has given a rating.');
+                throw new UserAlreadyRatedException('User ' . $newRating->user() . ' has given a rating.');
             }
 
             DomainEventPublisher::instance()->publish(
-                new IdeaRated($this->author->name(), $this->author->email(), 
-                    $this->title, $ratingValue)
+                new IdeaRated($this->author->name(), $this->author->email(), $this->title, $newRating->value())
             );
 
         }
@@ -79,13 +88,16 @@ class Idea
 
     public function averageRating()
     {
-        $numberOfRatings = count($this->rating);
+        $numberOfRatings = count($this->ratings);
         $totalRatings = 0;
 
         foreach ($this->ratings as $rating) {
             $totalRatings += $rating->value();
         }
 
+        if($numberOfRatings==0) {
+            return 0;
+        }
         return $totalRatings / $numberOfRatings;
     }
 

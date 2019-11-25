@@ -104,7 +104,7 @@
                 <p>{{ idea.description() }}</p>
                 <div class="author">By {{idea.author().name()}}</div>
                 <div class="email">{{idea.author().email()}}</div>
-                <div class="rating">Ratings: TBD <a href="{{ url('idea/rate/') }}{{ idea.id().id() }}">Rate</a></div>
+                <div class="rating">Ratings: {{idea.averageRating()}} <a href="{{ url('idea/rate/') }}{{ idea.id().id() }}">Rate</a></div>
                 <div class="rating">Votes: {{idea.votes()}} <a href="{{ url('idea/vote/') }}{{ idea.id().id() }}">Vote</a></div>
             </div>
         </li>

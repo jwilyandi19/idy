@@ -3,7 +3,7 @@
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Volt;
 use Idy\Idea\Infrastructure\SqlIdeaRepository;
-use Phalcon\Session\Adapter\Files as Session;
+use Idy\Idea\Infrastructure\SqlRatingRepository;
 
 $di['voltServiceMail'] = function($view) use ($di) {
 
@@ -51,14 +51,14 @@ $di['db'] = function () use ($di) {
     ]);
 };
 
-$di->setShared('session',function () use ($di) {
-    $session = new Session();
-    $session->start();
-    return $session;
-});
-
 $di->setShared('sql_idea_repository', function() use ($di) {
     $repo = new SqlIdeaRepository($di);
+
+    return $repo;
+});
+
+$di->setShared('sql_rating_repository', function() use ($di) {
+    $repo = new SqlRatingRepository($di);
 
     return $repo;
 });
